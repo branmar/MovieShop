@@ -1,0 +1,138 @@
+﻿@model ApplicationCore.Models.MovieDetailsModel
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <img src="@Model.PosterUrl" class="img-fluid" alt="@Model.Title" />  
+        </div>
+        <div class="col">
+            <h2> @Model.Title </h2>
+            <p> @Model.Tagline </p>
+            <p class="nowrap">
+                @Model.RunTime m | @Model.ReleaseDate.Value.Year
+                @foreach (var genre in Model.Genres) 
+                {
+                    <h5 class="badge bg-secondary nowrap">@genre.Name</h5>
+                }
+            </p>
+            <h4 class="badge bg-success">@Model.Rating</h4>
+            <p>@Model.Overview</p>
+        </div>
+        <div class="col">
+            <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#reviewModal">
+                <i class="fa fa-pencil-square fa-fw"></i>Review
+            </button>
+            <div class="modal" id="reviewModal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                               <h5 class="modal-title">Leave a review</h5>
+                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="mb-3 stars">
+                                    <input class="btn btn-outline-secondary" id="star-5" type="radio" name="star"/>
+                                    <label for="star-5">1</label>
+                                    <input class="btn btn-outline-secondary" id="star-4" type="radio" name="star"/>
+                                    <label for="star-4">2</label>
+                                    <input class="btn btn-outline-secondary" id="star-3" type="radio" name="star"/>
+                                    <label for="star-3">3</label>
+                                    <input class="btn btn-outline-secondary" id="star-2" type="radio" name="star"/>
+                                    <label for="star-2">4</label>
+                                    <input class="btn btn-outline-secondary" id="star-1" type="radio" name="star"/>
+                                    <label for="star-1">5</label>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="message-text" class="col-form-label">Review:</label>
+                                    <textarea class="form-control" id="message-text"></textarea>
+                                </div>
+                            </form>                              
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-dark">Save review</button>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+            <br />
+            <br /> 
+            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#buyMovieModal">
+                Buy $@Model.Price
+            </button>
+            <div class="modal" id="buyMovieModal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                               <h5 class="modal-title">Confirm purchase</h5>
+                               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="mb-3">
+                                    <p>Purchase @Model.Title for @Model.Price ?</p>
+                                </div>
+                            </form>                              
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-dark">Purchase</button>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-5">
+            <h4>Movie Facts</h4>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <i class="fa fa-calendar fa-fw"></i> Release Date
+                    <span class="badge bg-secondary rounded-pill">@Model.ReleaseDate.Value.ToString("D").Replace(Model.ReleaseDate.Value.DayOfWeek.ToString()+ ", ", "")</span>
+                </li>
+                <li class="list-group-item">
+                    <i class="fa fa-hourglass fa-fw" aria-hidden="true"></i> Runtime
+                    <span class="badge bg-secondary rounded-pill">@Model.RunTime m</span>
+                </li>
+                <li class="list-group-item">
+                    <i class="fa fa-money fa-fw"></i> Box Office
+                    <span class="badge bg-secondary rounded-pill">$@string.Format("{0:0,0.00}", Model.Revenue)</span>
+                </li>
+                <li class="list-group-item">
+                    <i class="fa fa-usd fa-fw"></i> Budget
+                    <span class="badge bg-secondary rounded-pill">$@string.Format("{0:0,0.00}", Model.Budget)</span>
+                </li>
+            </ul>
+            <h4>Trailers</h4>
+            <ul class="list-group list-group-flush">
+                @foreach (var trailer in Model.Trailers) 
+                {
+                    <li class="list-group-item">
+                        <i class="fa fa-youtube-play fa-fw"></i>
+                        <a href="@trailer.TrailerUrl">
+                             @trailer.Name
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="col-7">
+            <h4>Cast</h4>
+            <div class="list-group list-group-flush">
+                @foreach (var cast in Model.Casts)
+                {
+                    <a class="list-group-item text-decoration-none flex-nowrap" href="#">
+                        <img class="col-1 rounded-circle float-start" src="@cast.ProfilePath" alt="Cast member portrait">
+                        <i class="col-1 float-start">&nbsp;</i>
+                        <i class="col-5 float-start">@cast.Name</i>
+                        <i class="col-1 float-start">&nbsp;</i>
+                        <i class="col-5 float-start">@cast.Character</i>
+                    </a>        
+                }
+            </div>
+        </div>
+    </div>
+</div>
