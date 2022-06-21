@@ -17,9 +17,9 @@ namespace Infrastructure.Services
             _castRepository = castRepository;
         }
 
-        public CastModel GetCastDetails(int id)
+        public async Task<CastModel> GetCastDetails(int id)
         {
-            var castDetails = _castRepository.GetById(id);
+            var castDetails = await _castRepository.GetById(id);
 
             var cast = new CastModel
             {
