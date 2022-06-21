@@ -1,1 +1,27 @@
 ﻿@model ApplicationCore.Models.CastModel
+
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <img src="@Model.ProfilePath" alt="Photo of @Model.Name" />
+        </div>
+        
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-4">
+            <h1>@Model.Name</h1>
+        </div>
+    </div>
+    <br />
+    <div class="row justify-content-center">
+        <div class="col-4 list-group list-group-flush">
+            <h2 class="list-group-item">Other Movies</h2>
+            @foreach(var movie in Model.Movies) 
+            {
+                <a class="text-decoration-none list-group-item" asp-controller="Movie" asp-action="Details" asp-route-id="movie.Id">
+                    <h4>@movie.Title</h4>
+                </a>
+            }
+        </div>
+    </div>
+</div>

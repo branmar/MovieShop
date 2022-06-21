@@ -124,7 +124,7 @@
             <div class="list-group list-group-flush">
                 @foreach (var cast in Model.Casts)
                 {
-                    <a class="list-group-item text-decoration-none flex-nowrap" href="#">
+                    <a class="list-group-item text-decoration-none flex-nowrap" asp-controller="Cast" asp-action="Details" asp-route-id="@cast.Id">
                         <img class="col-1 rounded-circle float-start" src="@cast.ProfilePath" alt="Cast member portrait">
                         <span class="col-1 float-start">&nbsp;</span>
                         <span class="col-4 float-start">@cast.Name</span>

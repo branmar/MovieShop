@@ -25,15 +25,16 @@ namespace Infrastructure.Services
             {
                 Id = castDetails.Id,
                 Name = castDetails.Name,
-                ProfilePath = castDetails.ProfilePath
+                ProfilePath = castDetails.ProfilePath,
             };
 
             foreach (var movie in castDetails.MoviesOfCast)
             {
-                cast.Movies.Add(new MovieDetailsModel 
+                cast.Movies.Add(new MovieCardModel 
                 { 
                     Id = movie.MovieId,
-                    Title = movie.Movie.Title
+                    Title = movie.Movie.Title,
+                    PosterUrl = movie.Movie.PosterUrl
                 });
             }
 
