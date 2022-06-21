@@ -1,26 +1,26 @@
 ﻿@model ApplicationCore.Models.MovieDetailsModel
 
 <div class="container-fluid">
-    <div class="row">
-        <div class="col">
+    <div class="row p-3" style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),url(@Model.BackdropUrl)">
+        <div class="col-4">
             <img src="@Model.PosterUrl" class="img-fluid" alt="@Model.Title" />  
         </div>
-        <div class="col">
+        <div class="col-5 text-light">
             <h2> @Model.Title </h2>
             <p> @Model.Tagline </p>
             <p class="nowrap">
-                @Model.RunTime m | @Model.ReleaseDate.Value.Year
+                <span>@Model.RunTime m | @Model.ReleaseDate.Value.Year &nbsp;</span>
                 @foreach (var genre in Model.Genres) 
                 {
-                    <h5 class="badge bg-secondary nowrap">@genre.Name</h5>
+                    <span class="badge bg-secondary nowrap" style="mix-blend-mode: difference;"> @genre.Name</span>
                 }
             </p>
             <h4 class="badge bg-success">@Model.Rating</h4>
             <p>@Model.Overview</p>
         </div>
-        <div class="col">
-            <button type="button" class="btn btn-outline-dark" data-bs-toggle="modal" data-bs-target="#reviewModal">
-                <i class="fa fa-pencil-square fa-fw"></i>Review
+        <div class="col-2">
+            <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#reviewModal">
+                <span class="fa fa-pencil-square fa-fw"></span>Review
             </button>
             <div class="modal" id="reviewModal" tabindex="-1">
                 <div class="modal-dialog">
@@ -58,7 +58,7 @@
             </div>
             <br />
             <br /> 
-            <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#buyMovieModal">
+            <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#buyMovieModal">
                 Buy $@Model.Price
             </button>
             <div class="modal" id="buyMovieModal" tabindex="-1">
@@ -90,19 +90,19 @@
             <h4>Movie Facts</h4>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">
-                    <i class="fa fa-calendar fa-fw"></i> Release Date
+                    <span class="fa fa-calendar fa-fw"></span> Release Date
                     <span class="badge bg-secondary rounded-pill">@Model.ReleaseDate.Value.ToString("D").Replace(Model.ReleaseDate.Value.DayOfWeek.ToString()+ ", ", "")</span>
                 </li>
                 <li class="list-group-item">
-                    <i class="fa fa-hourglass fa-fw" aria-hidden="true"></i> Runtime
+                    <span class="fa fa-hourglass fa-fw" aria-hidden="true"></span> Runtime
                     <span class="badge bg-secondary rounded-pill">@Model.RunTime m</span>
                 </li>
                 <li class="list-group-item">
-                    <i class="fa fa-money fa-fw"></i> Box Office
+                    <span class="fa fa-money fa-fw"></span> Box Office
                     <span class="badge bg-secondary rounded-pill">$@string.Format("{0:0,0.00}", Model.Revenue)</span>
                 </li>
                 <li class="list-group-item">
-                    <i class="fa fa-usd fa-fw"></i> Budget
+                    <span class="fa fa-usd fa-fw"></span> Budget
                     <span class="badge bg-secondary rounded-pill">$@string.Format("{0:0,0.00}", Model.Budget)</span>
                 </li>
             </ul>
@@ -111,7 +111,7 @@
                 @foreach (var trailer in Model.Trailers) 
                 {
                     <li class="list-group-item">
-                        <i class="fa fa-youtube-play fa-fw"></i>
+                        <span class="fa fa-youtube-play fa-fw"></span>
                         <a href="@trailer.TrailerUrl">
                              @trailer.Name
                         </a>
@@ -126,10 +126,10 @@
                 {
                     <a class="list-group-item text-decoration-none flex-nowrap" href="#">
                         <img class="col-1 rounded-circle float-start" src="@cast.ProfilePath" alt="Cast member portrait">
-                        <i class="col-1 float-start">&nbsp;</i>
-                        <i class="col-5 float-start">@cast.Name</i>
-                        <i class="col-1 float-start">&nbsp;</i>
-                        <i class="col-5 float-start">@cast.Character</i>
+                        <span class="col-1 float-start">&nbsp;</span>
+                        <span class="col-4 float-start">@cast.Name</span>
+                        <span class="col-1 float-start">&nbsp;</span>
+                        <span class="col-5 float-start">@cast.Character</span>
                     </a>        
                 }
             </div>
