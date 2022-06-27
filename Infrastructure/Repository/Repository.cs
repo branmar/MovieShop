@@ -17,9 +17,11 @@ namespace Infrastructure.Repository
             _dbContext = dbContext;
         }
 
-        public Task<T> Add(T entity)
+        public async Task<T> Add(T entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Set<T>().Add(entity);
+            await _dbContext.SaveChangesAsync();
+            return entity;
         }
 
         public Task<T> Delete(T entity)
@@ -37,9 +39,11 @@ namespace Infrastructure.Repository
             throw new NotImplementedException();
         }
 
-        public Task<T> Update(T entity)
+        public async Task<T> Update(T entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Entry(entity).State = EntityState.Modified;
+            await _dbContext.SaveChangesAsync();
+            return entity;
         }
     }
 }

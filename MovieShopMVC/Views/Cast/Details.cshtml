@@ -18,7 +18,7 @@
             <h2 class="list-group-item">Other Movies</h2>
             @foreach(var movie in Model.Movies) 
             {
-                <a class="text-decoration-none list-group-item" asp-controller="Movie" asp-action="Details" asp-route-id="movie.Id">
+                <a class="text-decoration-none list-group-item" asp-controller="Movie" asp-action="Details" asp-route-id="@movie.Id">
                     <h4>@movie.Title</h4>
                 </a>
             }

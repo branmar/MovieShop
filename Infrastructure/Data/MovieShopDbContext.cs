@@ -12,7 +12,7 @@ namespace Infrastructure.Data
         }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<Movie> Movie { get; set; }
-        public DbSet<MovieGenre> MovieGenres { get; set; }
+        public DbSet<MovieGenre> MovieGenre { get; set; }
         public DbSet<Cast> Cast { get; set; }
         public DbSet<MovieCast> MovieCast { get; set; }
         public DbSet<Crew> Crew { get; set; }

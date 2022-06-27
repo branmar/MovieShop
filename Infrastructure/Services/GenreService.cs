@@ -24,5 +24,6 @@ namespace Infrastructure.Services
             var genresModel = genres.Select(g => new GenreModel { Id = g.Id, Name = g.Name });
             return genresModel;
         }
+
     }
 }

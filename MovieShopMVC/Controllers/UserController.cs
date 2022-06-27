@@ -1,83 +1,58 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MovieShopMVC.Services;
 
 namespace MovieShopMVC.Controllers
 {
     public class UserController : Controller
     {
-        // GET: UserController
-        public ActionResult Index()
+        // all these action methods should only be execute when user is loged in
+
+        private readonly ICurrentLoggedInUser _currentLogedInUser;
+        public UserController(ICurrentLoggedInUser currentLogedInUser)
+        {
+            _currentLogedInUser = currentLogedInUser;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Purchases()
+        {
+            // go to database and get all the movies purchased by user, user id
+            // var cookie = this.HttpContext.Request.Cookies["MovieShopAuthCookie"];
+            // can create a class the exposes HttpContext cooke decrypted info and claims
+            var userId = _currentLogedInUser.UserId;
+            // use the UserId and send to User Serivce to get information for that User 
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Favorites()
         {
             return View();
         }
 
-        // GET: UserController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: UserController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: UserController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: UserController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> AddReview()
         {
             return View();
         }
 
-        // POST: UserController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: UserController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> AddFavorite()
         {
             return View();
         }
 
-        // POST: UserController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> BuyMovie()
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Profile()
+        {
+            return View();
         }
     }
 }
