@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ApplicationCore.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,8 @@ namespace ApplicationCore.Models
     {
         public PurchaseDetailsModel()
         {
-            Movies = new List<MovieCardModel>();
+            MovieDetails = new MovieDetailsModel();
+            
         }
         public int Id { get; set; }
         public int UserId { get; set; }
@@ -18,7 +20,7 @@ namespace ApplicationCore.Models
         public decimal TotalPrice { get; set; }
         public DateTime PurchaseDateTime { get; set; }
         public int MovieId { get; set; }
-        public List<MovieCardModel> Movies { get; set; }
+        public MovieDetailsModel MovieDetails { get; set; }
 
     }
 }

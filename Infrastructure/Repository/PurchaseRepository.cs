@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.Contracts.Repository;
 using ApplicationCore.Entities;
+using ApplicationCore.Models;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -21,6 +22,13 @@ namespace Infrastructure.Repository
             var purchase = await _dbContext.Purchase
                                 .FirstOrDefaultAsync(p => p.Id == id);
 
+            return purchase;
+        }
+        public async Task<Purchase> GetPurchaseByUserAndMovie(int userId, int movieId)
+        {
+            var purchase = await _dbContext.Purchase
+                                .Where(p => p.UserId == userId)
+                                .FirstOrDefaultAsync(p => p.MovieId == movieId);
             return purchase;
         }
     }

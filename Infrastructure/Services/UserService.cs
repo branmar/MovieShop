@@ -49,7 +49,7 @@ namespace Infrastructure.Services
         public async Task<IEnumerable<PurchaseModel>> GetAllPurchasesForUser(int id)
         {
             var purchases = await _purchaseRepository.GetAll();
-            var purchasesModel = purchases.Select(p => new PurchaseModel
+            var purchasesModel = purchases.Where(p => p.UserId == id).Select(p => new PurchaseModel
             {
                 Id = p.Id,
                 UserId = p.UserId,
@@ -66,6 +66,26 @@ namespace Infrastructure.Services
         public async Task<PurchaseDetailsModel> GetPurchasesDetails(int userId, int movieId)
         {
             throw new NotImplementedException();
+            var purchaseDetails = await _purchaseRepository.GetPurchaseByUserAndMovie(userId, movieId);
+            var purchase = new PurchaseDetailsModel
+            {
+                MovieId = purchaseDetails.MovieId
+
+            };
+        }
+
+        public async Task<UserModel> GetUserById(int id)
+        {
+            var user = await _userRepository.GetById(id);
+            var userDetails = new UserModel
+            {
+                Id = id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                DateOfBirth = (DateTime)user.DateOfBirth
+            };
+            return userDetails;
         }
 
         public async Task<bool> IsMoviePurchased(PurchaseRequestModel purchaseRequest, int userId)
@@ -88,7 +108,7 @@ namespace Infrastructure.Services
             }
             var newPurchase = new Purchase
             {
-                UserId = purchaseRequest.UserId,
+                UserId = userId,
                 MovieId = purchaseRequest.MovieId,
                 TotalPrice = purchaseRequest.TotalPrice,
                 PurchaseDateTime = DateTime.Today,

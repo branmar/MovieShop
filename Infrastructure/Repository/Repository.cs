@@ -24,9 +24,11 @@ namespace Infrastructure.Repository
             return entity;
         }
 
-        public Task<T> Delete(T entity)
+        public async Task<T> Delete(T entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Set<T>().Remove(entity);
+            await _dbContext.SaveChangesAsync();
+            return entity;
         }
 
         public async virtual Task<IEnumerable<T>> GetAll()
@@ -34,7 +36,7 @@ namespace Infrastructure.Repository
             return await _dbContext.Set<T>().ToListAsync();
         }
 
-        public virtual Task<T> GetById(int id)
+        public async virtual Task<T> GetById(int id)
         {
             throw new NotImplementedException();
         }

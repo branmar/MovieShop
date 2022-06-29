@@ -26,9 +26,19 @@ namespace Infrastructure.Repository
             return movies;
         }
 
-        public Task<IEnumerable<Movie>> Get30HighestRatedMovies()
+        public async Task<IEnumerable<Movie>> Get30HighestRatedMovies()
         {
-            throw new NotImplementedException();
+            var movieRatings = await _dbContext.Review
+                .Include(m => m.Movie)
+                .GroupBy(m => m.MovieId)
+                .OrderByDescending(o => o.Sum(m => m.Rating))
+                .Select(o => new Review { MovieId = o.Key, Rating = o.Sum(m => m.Rating) })
+                .Take(30).ToListAsync();
+            var movie = movieRatings
+                .Where(m => m.MovieId == m.Movie.Id)
+                .Select(m => new Movie { Id = m.MovieId, Title = m.Movie.Title, PosterUrl = m.Movie.PosterUrl });
+
+            return movie;
         }
 
         public async Task<PagedResultSetModel<Movie>> GetMoviesByGenre(int genreId, int pageSize = 30, int pageNumber = 1)
@@ -64,5 +74,25 @@ namespace Infrastructure.Repository
 
             return movieDetails;
         }
+
+        public async Task<PagedResultSetModel<Review>> GetReviewsByMovie(int id, int pageSize = 30, int pageNumber = 1)
+        {
+            var totalReviewsForMovie = await _dbContext.Review.Where(m => m.Movie.Id == id).CountAsync();
+
+            var reviews = await _dbContext.Review
+                                .Where(r => r.Movie.Id == id)
+                                .Select(r => new Review
+                                {
+                                    MovieId = r.MovieId,
+                                    UserId = r.UserId,
+                                    Rating = r.Rating,
+                                    ReviewText = r.ReviewText
+                                })
+                                .Skip((pageNumber - 1) * pageSize)
+                                .Take(pageSize).ToListAsync();
+            var pagedReviews = new PagedResultSetModel<Review>(pageNumber, totalReviewsForMovie, pageSize, reviews);
+            return pagedReviews;
+        }
+
     }
 }

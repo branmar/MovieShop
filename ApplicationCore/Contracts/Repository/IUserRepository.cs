@@ -11,5 +11,7 @@ namespace ApplicationCore.Contracts.Repository
     {
         Task<User> GetUserByEmail(string email);
         Task<bool> CheckIfMoviePurchasedByUser(int userId, int movieId);
+        Task<bool> CheckEmailExists(string email);
+
     }
 }

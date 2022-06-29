@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.Models
 {
-    public class FavoriteRequestModel
+    public class MoviesReportModel
     {
-        public int UserId { get; set; }
-        public int MovieId { get; set; }
+        DateTime? FromDate { get; set; }
+        DateTime? ToDate { get; set; }
     }
 }
